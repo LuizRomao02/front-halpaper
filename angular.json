@@ -26,10 +26,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
               "src/styles.scss"
@@ -43,8 +41,7 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "500kB",
                   "maximumError": "1MB"
@@ -90,10 +87,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -103,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "32023eb5-fea8-4840-9d7d-a4c7fef22bfb"
   }
 }

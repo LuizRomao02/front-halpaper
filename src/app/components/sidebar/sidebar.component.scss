@@ -1,0 +1,19 @@
+.bg-sidebar {
+  background-color: #1a1d27; // mesma paleta escura da tela de login
+  border-right: 1px solid #2f3340;
+}
+
+.custom-panelmenu ::ng-deep .p-panelmenu-header {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+.custom-panelmenu ::ng-deep .p-menuitem-text,
+.custom-panelmenu ::ng-deep .p-menuitem-icon {
+  color: white !important;
+}
+
+.custom-panelmenu ::ng-deep .p-menuitem-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
