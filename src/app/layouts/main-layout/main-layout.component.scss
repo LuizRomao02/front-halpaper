@@ -18,7 +18,7 @@
     backdrop-filter: blur(4px);
 
     &.collapsed {
-      width: 80px;
+      width: 90px;
 
       .label,
       .brand {
@@ -28,7 +28,12 @@
       .toggle {
         transform: rotate(180deg);
       }
+
+      .sidebar-header {
+        justify-content: center;
+      }
     }
+
 
     .sidebar-header {
       display: flex;
@@ -48,7 +53,7 @@
         font-weight: 700;
         margin-left: 0.75rem;
         flex: 1;
-        color: #80cbc4;
+        color: #ffffff;
         text-shadow: 0 0 6px rgba(128, 203, 196, 0.25);
         letter-spacing: 0.5px;
       }
@@ -57,7 +62,7 @@
         background: transparent;
         border: none;
         color: #80cbc4;
-        font-size: 1.4rem;
+        font-size: 1.9rem;
         cursor: pointer;
         transition: transform 0.3s ease;
       }
