@@ -11,12 +11,38 @@
     <nav class="sidebar-menu">
       <ul>
         <li *ngFor="let item of menuAtual">
-          <a [routerLink]="item.route" routerLinkActive="active" [attr.title]="isSidebarCollapsed ? item.label : null">
-            <span class="icon">{{ item.icon }}</span>
-            <span class="label" *ngIf="!isSidebarCollapsed">{{ item.label }}</span>
-          </a>
+          <!-- Se tiver subitens -->
+          <ng-container *ngIf="item.children; else menuSimples">
+            <div class="menu-com-sub" (click)="toggleSubmenu(item.label)">
+              <span class="icon">{{ item.icon }}</span>
+              <span class="label" *ngIf="!isSidebarCollapsed">{{ item.label }}</span>
+              <span class="seta" *ngIf="!isSidebarCollapsed">
+                {{ submenuAberto === item.label ? '▾' : '▸' }}
+              </span>
+            </div>
+
+            <ul class="submenu" *ngIf="submenuAberto === item.label">
+              <li *ngFor="let sub of item.children">
+                <a [routerLink]="sub.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                  [attr.title]="isSidebarCollapsed ? sub.label : null">
+                  <span class="icon">{{ sub.icon }}</span>
+                  <span class="label" *ngIf="!isSidebarCollapsed">{{ sub.label }}</span>
+                </a>
+              </li>
+            </ul>
+          </ng-container>
+
+          <!-- Menu simples -->
+          <ng-template #menuSimples>
+            <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+              [attr.title]="isSidebarCollapsed ? item.label : null">
+              <span class="icon">{{ item.icon }}</span>
+              <span class="label" *ngIf="!isSidebarCollapsed">{{ item.label }}</span>
+            </a>
+          </ng-template>
         </li>
       </ul>
+
     </nav>
   </aside>
 

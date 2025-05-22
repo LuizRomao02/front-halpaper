@@ -1,0 +1,25 @@
+<div class="form-container">
+  <h2>Cadastro do Administrador</h2>
+  <form (ngSubmit)="cadastrar()" #formRef="ngForm">
+
+    <label for="nome">Nome</label>
+    <input id="nome" name="nome" type="text" [(ngModel)]="nome" placeholder="Digite o nome" required />
+
+    <label for="email">E-mail</label>
+    <input id="email" name="email" type="email" [(ngModel)]="email" placeholder="Digite o e-mail" required />
+
+    <label for="senha">Senha</label>
+    <input id="senha" name="senha" type="password" [(ngModel)]="senha" placeholder="Digite a senha" required />
+
+    <label>Acessos</label>
+    <div class="checkbox-group">
+      <label *ngFor="let acesso of acessosDisponiveis" class="checkbox-label">
+        <input type="checkbox" [value]="acesso" (change)="toggleAcesso(acesso)"
+          [checked]="acessosSelecionados.includes(acesso)" />
+        {{ acesso }}
+      </label>
+    </div>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+</div>

@@ -1,0 +1,35 @@
+<div class="list-container">
+  <h2>Administradores</h2>
+
+  <div class="filters">
+    <input type="text" [(ngModel)]="nomeFiltro" placeholder="Filtrar por nome" />
+    <input type="text" [(ngModel)]="emailFiltro" placeholder="Filtrar por e-mail" />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let admin of administradoresFiltrados">
+        <td>{{ admin.nome }}</td>
+        <td>{{ admin.email }}</td>
+        <td>
+          <button (click)="editarAdmin(admin.id)">Editar</button>
+          <button class="danger" (click)="excluirAdmin(admin.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button [disabled]="paginaAtual === 1" (click)="paginaAnterior()">Anterior</button>
+    <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+    <button [disabled]="paginaAtual === totalPaginas" (click)="proximaPagina()">Próxima</button>
+  </div>
+
+</div>

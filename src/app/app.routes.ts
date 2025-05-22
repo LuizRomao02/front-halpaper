@@ -17,18 +17,36 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
-        path: 'admin',
-        loadComponent: () =>
-          import('./pages/admin/admin.component').then((m) => m.AdminComponent),
+        path: '',
+        redirectTo: 'gestao/admin',
+        pathMatch: 'full',
       },
       {
-        path: 'cadastro/equipamentos',
-        loadComponent: () =>
-          import('./pages/equipamentos/equipamentos.component').then(
-            (m) => m.EquipamentosComponent
+        path: 'gestao',
+        loadChildren: () =>
+          import('./pages/gestao/gestao.routes').then((m) => m.GESTAO_ROUTES),
+      },
+      {
+        path: 'mecanica',
+        loadChildren: () =>
+          import('./pages/mecanica/mecanica.routes').then(
+            (m) => m.MECANICA_ROUTES
           ),
       },
-      // Adicione mais rotas aqui conforme for criando as telas
+      {
+        path: 'logistica',
+        loadChildren: () =>
+          import('./pages/logistica/logistica.routes').then(
+            (m) => m.LOGISTICA_ROUTES
+          ),
+      },
+      {
+        path: 'producao',
+        loadChildren: () =>
+          import('./pages/producao/producao.routes').then(
+            (m) => m.PRODUCAO_ROUTES
+          ),
+      },
     ],
   },
 ];

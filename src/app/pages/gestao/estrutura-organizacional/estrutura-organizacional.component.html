@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h2>Cadastro da Estrutura Organizacional</h2>
+  <form (ngSubmit)="cadastrar()" #formRef="ngForm">
+    <label for="unidade">Unidade/Fábrica</label>
+    <input id="unidade" name="unidade" type="text" [(ngModel)]="unidade" placeholder="Ex: Fábrica 1" required />
+
+    <label for="departamento">Departamento / Setor</label>
+    <input id="departamento" name="departamento" type="text" [(ngModel)]="departamento" placeholder="Ex: Produção"
+      required />
+
+    <label for="area">Área</label>
+    <input id="area" name="area" type="text" [(ngModel)]="area" placeholder="Ex: Linha A" required />
+
+    <label for="observacoes">Observações</label>
+    <textarea id="observacoes" name="observacoes" [(ngModel)]="observacoes" rows="4"
+      placeholder="Opcional..."></textarea>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+</div>
