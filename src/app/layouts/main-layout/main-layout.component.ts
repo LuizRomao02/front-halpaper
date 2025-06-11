@@ -96,6 +96,13 @@ export class MainLayoutComponent implements OnInit {
       { label: 'Perfis de Acesso', icon: '🔐', route: '/gestao/perfis' },
     ],
     MECÂNICA: [
+      { label: 'Ordem de Serviço',
+        icon: '📝',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/ordemservico/cadastro' },
+          { label: 'Listar', icon: '📋', route: '/mecanica/ordemservico/lista' },
+        ],
+      },
       { label: 'Equipamentos', icon: '🛠️', route: '/mecanica/equipamentos' },
       { label: 'Técnicos', icon: '🧰', route: '/mecanica/tecnicos' },
       {

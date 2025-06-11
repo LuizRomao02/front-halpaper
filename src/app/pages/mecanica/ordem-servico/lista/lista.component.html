@@ -1,0 +1,122 @@
+<div class="list-container">
+  <h2>Listagem de Ordens de Serviço</h2>
+
+  <!-- FILTROS -->
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Data</label>
+        <input type="date" [(ngModel)]="filtros.data" />
+      </div>
+
+      <div class="filter-group">
+        <label>Setor</label>
+        <input type="text" [(ngModel)]="filtros.setor" />
+      </div>
+
+      <div class="filter-group">
+        <label>Solicitante</label>
+        <input type="text" [(ngModel)]="filtros.solicitante" />
+      </div>
+
+      <div class="filter-group">
+        <label>Equipamento</label>
+        <input type="text" [(ngModel)]="filtros.equipamento" />
+      </div>
+
+      <div class="filter-group">
+        <label>Nome</label>
+        <input type="text" [(ngModel)]="filtros.nomeExecutor" />
+      </div>
+
+      <div class="filter-group">
+        <label>Tipo Manutenção</label>
+        <select [(ngModel)]="filtros.tipoManutencao">
+          <option value="">Todos</option>
+          <option value="Corretiva">Corretiva</option>
+          <option value="Preventiva">Preventiva</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Tempo Previsto (h)</label>
+        <input type="number" [(ngModel)]="filtros.tempoPrevisto" />
+      </div>
+
+      <div class="filter-group">
+        <label>Data Final</label>
+        <input type="date" [(ngModel)]="filtros.dataFinal" />
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
+  </div>
+
+  <!-- LISTAGEM -->
+  <div class="table-container">
+    <table *ngIf="ordensFiltradas.length > 0">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Setor</th>
+          <th>Solicitante</th>
+          <th>Equipamento</th>
+          <th>Executor</th>
+          <th>Tipo Manutenção</th>
+          <th>Tempo Previsto (h)</th>
+          <th>Data Final</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ordem of ordensFiltradas">
+          <td>{{ ordem.data }}</td>
+          <td>{{ ordem.setor }}</td>
+          <td>{{ ordem.solicitante }}</td>
+          <td>{{ ordem.equipamento }}</td>
+          <td>{{ ordem.nomeExecutor }}</td>
+          <td>{{ ordem.tipoManutencao }}</td>
+          <td>{{ ordem.tempoPrevisto }}</td>
+          <td>{{ ordem.dataFinal }}</td>
+          <td class="acoes">
+            <button class="visualizar" (click)="visualizar(ordem)">👁️</button>
+            <button class="editar" (click)="editar(ordem)">✏️</button>
+            <button class="excluir" (click)="excluir(ordem)">🗑️</button>
+            <button class="imprimir" (click)="imprimir(ordem)">🖨️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="ordensFiltradas.length === 0">Nenhuma ordem encontrada.</p>
+  </div>
+
+  <!-- MODAL VISUALIZAÇÃO -->
+  <div class="modal-overlay animate" *ngIf="ordemSelecionada">
+    <div class="modal-content">
+      <h3>Detalhes da Ordem de Serviço</h3>
+      <div class="detalhes-grid">
+        <div><strong>Data:</strong> {{ ordemSelecionada.data }}</div>
+        <div><strong>Setor:</strong> {{ ordemSelecionada.setor }}</div>
+        <div><strong>Solicitante:</strong> {{ ordemSelecionada.solicitante }}</div>
+        <div><strong>Equipamento:</strong> {{ ordemSelecionada.equipamento }}</div>
+        <div><strong>Motivo:</strong> {{ ordemSelecionada.motivo }}</div>
+        <div><strong>Recebido por:</strong> {{ ordemSelecionada.recebidoPor }}</div>
+        <div><strong>Executor:</strong> {{ ordemSelecionada.nomeExecutor }}</div>
+        <div><strong>Tipo:</strong> {{ ordemSelecionada.tipoManutencao }}</div>
+        <div><strong>Descrição:</strong> {{ ordemSelecionada.descricao }}</div>
+        <div><strong>Material utilizado:</strong> {{ ordemSelecionada.material }}</div>
+        <div><strong>Mão de obra:</strong> {{ ordemSelecionada.maoDeObra }}</div>
+        <div><strong>Tempo previsto (h):</strong> {{ ordemSelecionada.tempoPrevisto }}</div>
+        <div><strong>Tempo utilizado (h):</strong> {{ ordemSelecionada.tempoUtilizado }}</div>
+        <div><strong>Data final:</strong> {{ ordemSelecionada.dataFinal }}</div>
+        <div><strong>Assinatura:</strong> {{ ordemSelecionada.assinatura }}</div>
+      </div>
+      <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
+    </div>
+  </div>
+
+</div>

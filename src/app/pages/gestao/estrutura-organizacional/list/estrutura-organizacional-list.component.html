@@ -1,0 +1,49 @@
+<div class="list-container">
+  <h2>Estrutura Organizacional</h2>
+
+  <div class="filters">
+    <input type="text" [(ngModel)]="filtroNome" placeholder="Filtrar por unidade" />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Unidade</th>
+        <th>Departamento</th>
+        <th>Área</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estrutura of estruturasFiltradas">
+        <td>{{ estrutura.unidade }}</td>
+        <td>{{ estrutura.departamento }}</td>
+        <td>{{ estrutura.area }}</td>
+        <td>
+          <button (click)="visualizarDetalhes(estrutura)">👁️ Visualizar</button>
+          <button (click)="editarEstrutura(estrutura.id)">✏️ Editar</button>
+          <button class="danger" (click)="excluirEstrutura(estrutura.id)">🗑️ Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button [disabled]="paginaAtual === 1" (click)="paginaAnterior()">Anterior</button>
+    <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+    <button [disabled]="paginaAtual === totalPaginas" (click)="paginaProxima()">Próxima</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="estruturaSelecionada">
+    <div class="modal">
+      <h3>Detalhes da Estrutura</h3>
+      <p><strong>Unidade:</strong> {{ estruturaSelecionada.unidade }}</p>
+      <p><strong>Departamento:</strong> {{ estruturaSelecionada.departamento }}</p>
+      <p><strong>Área:</strong> {{ estruturaSelecionada.area }}</p>
+      <p><strong>Descrição:</strong> {{ estruturaSelecionada.descricao }}</p>
+
+      <button (click)="fecharModal()">Fechar</button>
+    </div>
+  </div>
+</div>

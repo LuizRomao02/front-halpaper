@@ -1,0 +1,81 @@
+<div class="form-container">
+  <h2>Cadastro de Ordem de Serviço</h2>
+
+<form #osForm="ngForm" (ngSubmit)="cadastrar(osForm)" novalidate>
+
+    <!-- DATA -->
+    <label for="data">Data</label>
+    <input type="date" id="data" name="data" [(ngModel)]="ordemServico.data" required #data="ngModel" />
+    <div class="error" *ngIf="data.invalid && data.touched">Data é obrigatória.</div>
+
+    <!-- SETOR -->
+    <label for="setor">Setor</label>
+    <input type="text" id="setor" name="setor" [(ngModel)]="ordemServico.setor" required #setor="ngModel" />
+    <div class="error" *ngIf="setor.invalid && setor.touched">Setor é obrigatório.</div>
+
+    <!-- SOLICITANTE -->
+    <label for="solicitante">Solicitante</label>
+    <input type="text" id="solicitante" name="solicitante" [(ngModel)]="ordemServico.solicitante" required #solicitante="ngModel" />
+    <div class="error" *ngIf="solicitante.invalid && solicitante.touched">Solicitante é obrigatório.</div>
+
+    <!-- EQUIPAMENTO -->
+    <label for="equipamento">Equipamento</label>
+    <input type="text" id="equipamento" name="equipamento" [(ngModel)]="ordemServico.equipamento" required #equipamento="ngModel" />
+    <div class="error" *ngIf="equipamento.invalid && equipamento.touched">Equipamento é obrigatório.</div>
+
+    <!-- MOTIVO -->
+    <label for="motivo">Motivo</label>
+    <input type="text" id="motivo" name="motivo" [(ngModel)]="ordemServico.motivo" required #motivo="ngModel" />
+    <div class="error" *ngIf="motivo.invalid && motivo.touched">Motivo é obrigatório.</div>
+
+    <!-- RECEBIDO POR -->
+    <label for="recebidoPor">Recebido por</label>
+    <input type="text" id="recebidoPor" name="recebidoPor" [(ngModel)]="ordemServico.recebidoPor" required #recebidoPor="ngModel" />
+    <div class="error" *ngIf="recebidoPor.invalid && recebidoPor.touched">Campo obrigatório.</div>
+
+    <!-- NOME EXECUTOR -->
+    <label for="nomeExecutor">Nome do Executor</label>
+    <input type="text" id="nomeExecutor" name="nomeExecutor" [(ngModel)]="ordemServico.nomeExecutor" required #nomeExecutor="ngModel" />
+    <div class="error" *ngIf="nomeExecutor.invalid && nomeExecutor.touched">Campo obrigatório.</div>
+
+    <!-- TIPO MANUTENÇÃO -->
+    <label for="tipoManutencao">Tipo de Manutenção</label>
+    <input type="text" id="tipoManutencao" name="tipoManutencao" [(ngModel)]="ordemServico.tipoManutencao" required #tipoManutencao="ngModel" />
+    <div class="error" *ngIf="tipoManutencao.invalid && tipoManutencao.touched">Campo obrigatório.</div>
+
+    <!-- DESCRIÇÃO -->
+    <label for="descricao">Descrição do Serviço</label>
+    <textarea id="descricao" name="descricao" [(ngModel)]="ordemServico.descricao" required #descricao="ngModel"></textarea>
+    <div class="error" *ngIf="descricao.invalid && descricao.touched">Campo obrigatório.</div>
+
+    <!-- MATERIAL -->
+    <label for="material">Material Utilizado</label>
+    <textarea id="material" name="material" [(ngModel)]="ordemServico.material"></textarea>
+
+    <!-- MÃO DE OBRA -->
+    <label for="maoDeObra">Mão de Obra</label>
+    <input type="text" id="maoDeObra" name="maoDeObra" [(ngModel)]="ordemServico.maoDeObra" />
+
+    <!-- TEMPO PREVISTO -->
+    <label for="tempoPrevisto">Tempo Previsto (h)</label>
+    <input type="number" id="tempoPrevisto" name="tempoPrevisto" [(ngModel)]="ordemServico.tempoPrevisto" min="0" />
+
+    <!-- TEMPO UTILIZADO -->
+    <label for="tempoUtilizado">Tempo Utilizado (h)</label>
+    <input type="number" id="tempoUtilizado" name="tempoUtilizado" [(ngModel)]="ordemServico.tempoUtilizado" min="0" />
+
+    <!-- DATA FINAL -->
+    <label for="dataFinal">Data Final</label>
+    <input type="date" id="dataFinal" name="dataFinal" [(ngModel)]="ordemServico.dataFinal" />
+
+    <!-- ASSINATURA -->
+    <label for="assinatura">Assinatura</label>
+    <input type="text" id="assinatura" name="assinatura" [(ngModel)]="ordemServico.assinatura" />
+
+    <!-- BOTÃO -->
+    <button type="submit" [disabled]="osForm.invalid">Cadastrar</button>
+  </form>
+
+  <app-toast></app-toast>
+
+</div>
