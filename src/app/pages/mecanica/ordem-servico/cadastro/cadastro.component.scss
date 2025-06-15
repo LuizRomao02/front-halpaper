@@ -27,6 +27,24 @@
     font-family: 'Segoe UI', sans-serif;
   }
 
+  select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: white;
+    font-size: 14px;
+    appearance: none;
+
+    &:focus {
+      outline: none;
+      border-color: #00796b;
+      box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
+    }
+  }
+
   textarea {
     resize: vertical;
     min-height: 80px;

@@ -10,6 +10,17 @@
       </div>
 
       <div class="filter-group">
+        <label>Status</label>
+        <select [(ngModel)]="filtros.tipoManutencao">
+          <option value="">Todos</option>
+          <option value="Novo">Novo</option>
+          <option value="Em andamento">Em andamento</option>
+          <option value="Validacao">Validação</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
         <label>Setor</label>
         <input type="text" [(ngModel)]="filtros.setor" />
       </div>
@@ -25,8 +36,8 @@
       </div>
 
       <div class="filter-group">
-        <label>Nome</label>
-        <input type="text" [(ngModel)]="filtros.nomeExecutor" />
+        <label>Tecnico</label>
+        <input type="text" [(ngModel)]="filtros.tecnico" />
       </div>
 
       <div class="filter-group">
@@ -61,6 +72,7 @@
       <thead>
         <tr>
           <th>Data</th>
+          <th>Status</th>
           <th>Setor</th>
           <th>Solicitante</th>
           <th>Equipamento</th>
@@ -74,18 +86,28 @@
       <tbody>
         <tr *ngFor="let ordem of ordensFiltradas">
           <td>{{ ordem.data }}</td>
+          <td>{{ ordem.status }}</td>
           <td>{{ ordem.setor }}</td>
           <td>{{ ordem.solicitante }}</td>
           <td>{{ ordem.equipamento }}</td>
-          <td>{{ ordem.nomeExecutor }}</td>
+          <td>{{ ordem.tecnico }}</td>
           <td>{{ ordem.tipoManutencao }}</td>
           <td>{{ ordem.tempoPrevisto }}</td>
           <td>{{ ordem.dataFinal }}</td>
           <td class="acoes">
-            <button class="visualizar" (click)="visualizar(ordem)">👁️</button>
+            <button class="visualizar" title="Visualizar" (click)="visualizar(ordem)">👁️</button>
             <button class="editar" (click)="editar(ordem)">✏️</button>
             <button class="excluir" (click)="excluir(ordem)">🗑️</button>
             <button class="imprimir" (click)="imprimir(ordem)">🖨️</button>
+            <button
+              class="atualizarStatus"
+              [ngClass]="{ 'desativado': ordem.status === 'Concluído'}"
+              [disabled]="ordem.status === 'Concluído'"
+              (click)="confirmarAtualizacaoStatus(ordem)"
+              title="Atualizar Status"
+            >
+              ➡️
+            </button>
           </td>
         </tr>
       </tbody>
@@ -105,7 +127,7 @@
         <div><strong>Equipamento:</strong> {{ ordemSelecionada.equipamento }}</div>
         <div><strong>Motivo:</strong> {{ ordemSelecionada.motivo }}</div>
         <div><strong>Recebido por:</strong> {{ ordemSelecionada.recebidoPor }}</div>
-        <div><strong>Executor:</strong> {{ ordemSelecionada.nomeExecutor }}</div>
+        <div><strong>Executor:</strong> {{ ordemSelecionada.tecnico }}</div>
         <div><strong>Tipo:</strong> {{ ordemSelecionada.tipoManutencao }}</div>
         <div><strong>Descrição:</strong> {{ ordemSelecionada.descricao }}</div>
         <div><strong>Material utilizado:</strong> {{ ordemSelecionada.material }}</div>
@@ -118,5 +140,25 @@
       <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
     </div>
   </div>
+
+  <!-- Modal de Confirmação de Status -->
+  <div class="modal-overlay animate" *ngIf="ordemParaAtualizar">
+    <div class="modal-content">
+      <h3>Confirmar alteração de status</h3>
+      <p>
+        Deseja realmente alterar o status da OS de
+        <strong>{{ ordemParaAtualizar.status }}</strong>
+        para
+        <strong>{{
+          statusProximos[statusProximos.indexOf(ordemParaAtualizar.status) + 1]
+        }}</strong>?
+      </p>
+      <div class="button-group">
+        <button (click)="atualizarStatus()">Sim, atualizar</button>
+        <button class="clear" (click)="fecharModalStatus()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
 
 </div>

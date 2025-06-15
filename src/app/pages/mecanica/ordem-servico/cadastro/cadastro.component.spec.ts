@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CadastroOsComponent } from './cadastro.component';
 
-describe('CadastroComponent', () => {
+describe('CadastroOsComponent', () => {
   let component: CadastroOsComponent;
   let fixture: ComponentFixture<CadastroOsComponent>;
 

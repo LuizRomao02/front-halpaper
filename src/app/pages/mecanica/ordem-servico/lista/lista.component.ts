@@ -10,7 +10,7 @@ interface OrdemServico {
   equipamento: string;
   motivo: string;
   recebidoPor: string;
-  nomeExecutor: string;
+  tecnico: string;
   tipoManutencao: string;
   descricao: string;
   material: string;
@@ -19,6 +19,7 @@ interface OrdemServico {
   tempoUtilizado: number;
   dataFinal: string;
   assinatura: string;
+  status: string;
 }
 
 @Component({
@@ -28,58 +29,69 @@ interface OrdemServico {
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.scss'],
 })
-
 export class ListaOsComponent {
-  ordemSelecionada: any = null;
+  ordemSelecionada: OrdemServico | null = null;
+  ordemParaAtualizar: OrdemServico | null = null;
+
+  statusProximos = [
+    'Novo',
+    'Em andamento',
+    'Validação',
+    'Concluído'
+  ];
 
   filtros = {
     data: '',
     setor: '',
     solicitante: '',
     equipamento: '',
-    nomeExecutor: '',
+    tecnico: '',
     tipoManutencao: '',
     tempoPrevisto: '',
-    dataFinal: ''
+    dataFinal: '',
+    status: ''
   };
+
+  statusEtapas = ['Novo', 'Em andamento', 'Validação', 'Concluído', 'Teste de produção'];
 
   ordensFiltradas: OrdemServico[] = [
     {
-      data: '10/06/2025',
+      data: '2025-06-10',
       setor: 'Manutenção',
       solicitante: 'Carlos Silva',
       equipamento: 'Compressor ABC123',
       motivo: 'Superaquecimento',
       recebidoPor: 'Ricardo Almeida',
-      nomeExecutor: 'João Mendes',
+      tecnico: 'João Mendes',
       tipoManutencao: 'Corretiva',
       descricao: 'Substituição de válvula térmica.',
       material: 'Válvula nova, tubo de cobre',
       maoDeObra: '2 técnicos',
       tempoPrevisto: 3,
       tempoUtilizado: 2,
-      dataFinal: '10/06/2025',
-      assinatura: 'Carlos Silva'
+      dataFinal: '2025-06-11',
+      assinatura: 'Carlos Silva',
+      status: 'Novo'
     },
     {
-      data: '10/06/2025',
+      data: '2025-06-09',
       setor: 'Produção',
       solicitante: 'Ana Souza',
       equipamento: 'Esteira XYZ',
       motivo: 'Manutenção preventiva mensal',
       recebidoPor: 'Juliana Costa',
-      nomeExecutor: 'Maria Oliveira',
+      tecnico: 'Maria Oliveira',
       tipoManutencao: 'Preventiva',
       descricao: 'Lubrificação e checagem dos motores.',
       material: 'Óleo lubrificante, pano técnico',
       maoDeObra: '1 técnico',
       tempoPrevisto: 2,
       tempoUtilizado: 2,
-      dataFinal: '10/06/2025',
-      assinatura: 'Ana Souza'
+      dataFinal: '2025-06-10',
+      assinatura: 'Ana Souza',
+      status: 'Novo'
     }
   ];
-
 
   filtrar() {
     console.log('Filtros aplicados:', this.filtros);
@@ -91,10 +103,11 @@ export class ListaOsComponent {
       setor: '',
       solicitante: '',
       equipamento: '',
-      nomeExecutor: '',
+      tecnico: '',
       tipoManutencao: '',
       tempoPrevisto: '',
-      dataFinal: ''
+      dataFinal: '',
+      status: ''
     };
   }
 
@@ -106,8 +119,8 @@ export class ListaOsComponent {
     console.log('Excluir:', ordem);
   }
 
-  visualizar(ordem: any) {
-  this.ordemSelecionada = ordem;
+  visualizar(ordem: OrdemServico) {
+    this.ordemSelecionada = ordem;
   }
 
   fecharVisualizacao() {
@@ -122,17 +135,17 @@ export class ListaOsComponent {
     }
   }
 
-  imprimir(ordem: any) {
+  imprimir(ordem: OrdemServico) {
     const campos = [
       "Data", "Setor", "Solicitante", "Equipamento", "Motivo", "Recebido por",
-      "Nome do Executor", "Tipo de Manutenção", "Descrição do Serviço", "Material Utilizado",
-      "Mão de Obra", "Tempo Previsto (h)", "Tempo Utilizado (h)", "Data Final", "Assinatura"
+      "Técnico Responsável", "Tipo de Manutenção", "Descrição do Serviço", "Material Utilizado",
+      "Mão de Obra", "Tempo Previsto (h)", "Tempo Utilizado (h)", "Data Final", "Assinatura", "Status"
     ];
 
     const chaves = [
       "data", "setor", "solicitante", "equipamento", "motivo", "recebidoPor",
-      "nomeExecutor", "tipoManutencao", "descricao", "material",
-      "maoDeObra", "tempoPrevisto", "tempoUtilizado", "dataFinal", "assinatura"
+      "tecnico", "tipoManutencao", "descricao", "material",
+      "maoDeObra", "tempoPrevisto", "tempoUtilizado", "dataFinal", "assinatura", "status"
     ];
 
     fetch('assets/templates/impressao-os.html')
@@ -152,7 +165,7 @@ export class ListaOsComponent {
           tbody.innerHTML = campos.map((label, i) => `
             <tr>
               <th>${label}</th>
-              <td>${this.formatarDado(ordem[chaves[i]], chaves[i])}</td>
+              <td>${this.formatarDado(ordem[chaves[i] as keyof OrdemServico], chaves[i])}</td>
             </tr>`).join('');
 
           const logo = win.document.querySelector("img");
@@ -170,5 +183,24 @@ export class ListaOsComponent {
       return new Date(valor).toLocaleDateString('pt-BR');
     }
     return valor ?? '';
+  }
+
+  confirmarAtualizacaoStatus(ordem: OrdemServico) {
+    this.ordemParaAtualizar = ordem;
+  }
+
+  fecharModalStatus() {
+    this.ordemParaAtualizar = null;
+  }
+
+  atualizarStatus() {
+    if (!this.ordemParaAtualizar) return;
+
+    const index = this.statusProximos.indexOf(this.ordemParaAtualizar.status);
+    if (index !== -1 && index < this.statusProximos.length - 1) {
+      this.ordemParaAtualizar.status = this.statusProximos[index + 1];
+    }
+
+    this.fecharModalStatus();
   }
 }

@@ -33,10 +33,13 @@
     <input type="text" id="recebidoPor" name="recebidoPor" [(ngModel)]="ordemServico.recebidoPor" required #recebidoPor="ngModel" />
     <div class="error" *ngIf="recebidoPor.invalid && recebidoPor.touched">Campo obrigatório.</div>
 
-    <!-- NOME EXECUTOR -->
-    <label for="nomeExecutor">Nome do Executor</label>
-    <input type="text" id="nomeExecutor" name="nomeExecutor" [(ngModel)]="ordemServico.nomeExecutor" required #nomeExecutor="ngModel" />
-    <div class="error" *ngIf="nomeExecutor.invalid && nomeExecutor.touched">Campo obrigatório.</div>
+    <!-- TÉCNICO RESPONSÁVEL -->
+    <label for="tecnico">Técnico Responsável</label>
+    <select id="tecnico" name="tecnico" [(ngModel)]="ordemServico.tecnico" required #tecnico="ngModel">
+      <option value="" disabled selected>Selecione um técnico</option>
+      <option *ngFor="let tecnico of tecnicos" [value]="tecnico.nome">{{ tecnico.nome }} - {{ tecnico.especialidade }}</option>
+    </select>
+    <div class="error" *ngIf="tecnico.invalid && tecnico.touched">Selecione um técnico.</div>
 
     <!-- TIPO MANUTENÇÃO -->
     <label for="tipoManutencao">Tipo de Manutenção</label>

@@ -19,6 +19,7 @@ export class ListaOsComponent {
     equipamento: '',
     nomeExecutor: '',
     tipoManutencao: '',
+    status: '',
     tempoPrevisto: '',
     dataFinal: ''
   };
@@ -33,6 +34,7 @@ export class ListaOsComponent {
     this.filtros = {
       data: '',
       setor: '',
+      status: '',
       solicitante: '',
       equipamento: '',
       nomeExecutor: '',

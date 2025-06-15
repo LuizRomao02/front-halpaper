@@ -23,7 +23,6 @@ export class CadastroOsComponent {
     equipamento: '',
     motivo: '',
     recebidoPor: '',
-    nomeExecutor: '',
     tipoManutencao: '',
     descricao: '',
     material: '',
@@ -31,8 +30,16 @@ export class CadastroOsComponent {
     tempoPrevisto: null,
     tempoUtilizado: null,
     dataFinal: '',
-    assinatura: ''
+    assinatura: '',
+    tecnico: ''
   };
+
+  tecnicos = [ //vai vir do backend - Técnicos cadastrados
+    { nome: 'João Mecânico', especialidade: 'Mecânica' },
+    { nome: 'Maria Eletricista', especialidade: 'Elétrica' },
+    { nome: 'Carlos Hidráulico', especialidade: 'Hidráulica' }
+  ];
+
 
   cadastrar(form: NgForm) {
     console.log('Ordem de Serviço cadastrada:', this.ordemServico);
