@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./lista.component.scss']
 })
 
-export class ListaComponent {
+export class ListaOsComponent {
 
   filtros = {
     data: '',
@@ -18,7 +18,7 @@ export class ListaComponent {
     solicitante: '',
     equipamento: '',
     nomeExecutor: '',
-    tipo: '',
+    tipoManutencao: '',
     tempoPrevisto: '',
     dataFinal: ''
   };
@@ -36,7 +36,7 @@ export class ListaComponent {
       solicitante: '',
       equipamento: '',
       nomeExecutor: '',
-      tipo: '',
+      tipoManutencao: '',
       tempoPrevisto: '',
       dataFinal: ''
     };

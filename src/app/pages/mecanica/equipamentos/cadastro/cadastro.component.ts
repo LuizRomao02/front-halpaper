@@ -1,41 +1,31 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { ToastComponent } from 'app/components/toast/toast.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-cadastro',
+  selector: 'app-cadastro-equipamento',
   standalone: true,
-  imports: [FormsModule, CommonModule, ToastComponent],
+  imports: [CommonModule, FormsModule, ToastComponent],
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss']
+  styleUrls: ['./cadastro.component.scss'],
 })
 
-export class CadastroOsComponent {
+export class CadastroEqComponent {
   @ViewChild(ToastComponent) toast!: ToastComponent;
 
-  ordemServico = {
-    data: '',
+  equipamento = {
+    nome: '',
+    codigo: '',
     setor: '',
-    solicitante: '',
-    equipamento: '',
-    motivo: '',
-    recebidoPor: '',
-    nomeExecutor: '',
-    tipoManutencao: '',
     descricao: '',
-    material: '',
-    maoDeObra: '',
-    tempoPrevisto: null,
-    tempoUtilizado: null,
-    dataFinal: '',
-    assinatura: ''
+    dataAquisicao: ''
   };
 
   cadastrar(form: NgForm) {
-    console.log('Ordem de Serviço cadastrada:', this.ordemServico);
+    console.log('Equipamento salvo:', this.equipamento);
 
     // Aqui você pode enviar para o backend futuramente
     this.toast.show('Cadastro realizado com sucesso!');

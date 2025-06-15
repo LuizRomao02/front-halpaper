@@ -1,0 +1,91 @@
+<div class="list-container">
+  <h2>Listagem de Técnicos</h2>
+
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Nome</label>
+        <input type="text" [(ngModel)]="filtros.nome" />
+      </div>
+      <div class="filter-group">
+        <label>Especialidade</label>
+        <input type="text" [(ngModel)]="filtros.especialidade" />
+      </div>
+      <div class="filter-group">
+        <label>Setor</label>
+        <input type="text" [(ngModel)]="filtros.setor" />
+      </div>
+      <div class="filter-group">
+        <label>Disponibilidade</label>
+        <input type="text" [(ngModel)]="filtros.disponibilidade" />
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table *ngIf="tecnicosFiltrados.length > 0">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Matrícula</th>
+          <th>Especialidade</th>
+          <th>Setor</th>
+          <th>Disponibilidade</th>
+          <th>Certificações</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tecnicosFiltrados">
+          <td>{{ t.nome }}</td>
+          <td>{{ t.matricula }}</td>
+          <td>{{ t.especialidade }}</td>
+          <td>{{ t.setor }}</td>
+          <td>{{ t.disponibilidade }}</td>
+          <td>{{ t.certificacoes }}</td>
+          <td class="acoes">
+            <button class="visualizar" (click)="visualizar(t)">👁️</button>
+            <button class="editar" (click)="editar(t)">✏️</button>
+            <button class="excluir" (click)="excluir(t)">🗑️</button>
+            <button class="imprimir" (click)="imprimir(t)">🖨️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="tecnicosFiltrados.length === 0">Nenhum técnico encontrado.</p>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="tecnicoSelecionado">
+    <div class="modal-content">
+      <h3>Detalhes do Técnico</h3>
+      <div class="detalhes-grid">
+        <div>
+          <label>Nome</label>
+          <p>{{ tecnicoSelecionado?.nome }}</p>
+        </div>
+        <div>
+          <label>Matrícula</label>
+          <p>{{ tecnicoSelecionado?.matricula }}</p>
+        </div>
+        <div>
+          <label>Especialidade</label>
+          <p>{{ tecnicoSelecionado?.especialidade }}</p>
+        </div>
+        <div>
+          <label>Setor</label>
+          <p>{{ tecnicoSelecionado?.setor }}</p>
+        </div>
+        <div>
+          <label>Disponibilidade</label>
+          <p>{{ tecnicoSelecionado?.disponibilidade }}</p>
+        </div>
+        <div>
+          <label>Certificações</label>
+          <p>{{ tecnicoSelecionado?.certificacoes }}</p>
+        </div>
+      </div>
+      <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
+    </div>
+  </div>
+</div>

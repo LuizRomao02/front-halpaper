@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Impressão do Técnico</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+      background-color: #ffffff;
+      color: #212121;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      max-width: 140px;
+    }
+
+    .titulo {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #004d40;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    th {
+      background-color: #004d40;
+      color: white;
+      font-weight: 600;
+      width: 30%;
+    }
+
+    td {
+      background-color: #ffffff;
+      color: #212121;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f1f8e9;
+    }
+
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      th {
+        background-color: #004d40 !important;
+        color: white !important;
+      }
+
+      td {
+        background-color: #ffffff !important;
+        color: #212121 !important;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f1f8e9 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="../images/logotipo_sem_fundo.png" alt="Logo da Empresa" />
+  </div>
+  <div class="titulo">Ficha de Técnico</div>
+
+  <table>
+    <tbody id="tabela-dados"></tbody>
+  </table>
+</body>
+</html>

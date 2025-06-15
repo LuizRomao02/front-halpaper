@@ -29,7 +29,7 @@ interface OrdemServico {
   styleUrls: ['./lista.component.scss'],
 })
 
-export class ListaComponent {
+export class ListaOsComponent {
   ordemSelecionada: any = null;
 
   filtros = {

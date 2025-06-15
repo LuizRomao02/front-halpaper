@@ -103,8 +103,20 @@ export class MainLayoutComponent implements OnInit {
           { label: 'Listar', icon: '📋', route: '/mecanica/ordemservico/lista' },
         ],
       },
-      { label: 'Equipamentos', icon: '🛠️', route: '/mecanica/equipamentos' },
-      { label: 'Técnicos', icon: '🧰', route: '/mecanica/tecnicos' },
+      { label: 'Equipamentos',
+       icon: '🛠️',
+       children: [
+         { label: 'Cadastrar', icon: '➕', route: '/mecanica/equipamentos/cadastro' },
+         { label: 'Listar', icon: '📋', route: '/mecanica/equipamentos/lista' },
+       ],
+      },
+      { label: 'Técnicos',
+       icon: '🧰',
+       children: [
+         { label: 'Cadastrar', icon: '➕', route: '/mecanica/tecnicos/cadastro' },
+         { label: 'Listar', icon: '📋', route: '/mecanica/tecnicos/lista' },
+       ],
+      },
       {
         label: 'Prontuário Técnico',
         icon: '📋',

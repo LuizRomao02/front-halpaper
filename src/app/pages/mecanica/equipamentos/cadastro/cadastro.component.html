@@ -1,0 +1,35 @@
+<div class="form-container">
+  <h2>Cadastro de Equipamento</h2>
+
+  <form #eqForm="ngForm" (ngSubmit)="cadastrar(eqForm)" novalidate>
+    <!-- Nome do Equipamento -->
+    <label for="nome">Nome do Equipamento</label>
+    <input type="text" id="nome" name="nome" [(ngModel)]="equipamento.nome" required #nome="ngModel" />
+    <div class="error" *ngIf="nome.invalid && nome.touched">Nome é obrigatório.</div>
+
+    <!-- Código -->
+    <label for="codigo">Código</label>
+    <input type="text" id="codigo" name="codigo" [(ngModel)]="equipamento.codigo" required #codigo="ngModel" />
+    <div class="error" *ngIf="codigo.invalid && codigo.touched">Código é obrigatório.</div>
+
+    <!-- Setor -->
+    <label for="setor">Setor</label>
+    <input type="text" id="setor" name="setor" [(ngModel)]="equipamento.setor" required #setor="ngModel" />
+    <div class="error" *ngIf="setor.invalid && setor.touched">Setor é obrigatório.</div>
+
+    <!-- Descrição -->
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" name="descricao" [(ngModel)]="equipamento.descricao" required #descricao="ngModel"></textarea>
+    <div class="error" *ngIf="descricao.invalid && descricao.touched">Descrição é obrigatória.</div>
+
+    <!-- Data de Aquisição -->
+    <label for="dataAquisicao">Data de Aquisição</label>
+    <input type="date" id="dataAquisicao" name="dataAquisicao" [(ngModel)]="equipamento.dataAquisicao" />
+
+    <!-- Botão -->
+    <button type="submit" [disabled]="eqForm.invalid">Cadastrar</button>
+  </form>
+
+  <app-toast></app-toast>
+
+</div>

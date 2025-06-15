@@ -1,0 +1,45 @@
+<div class="form-container">
+  <h2>Cadastro de Técnico</h2>
+
+  <form #formTecnico="ngForm" (ngSubmit)="cadastrar(formTecnico)" novalidate>
+
+    <!-- Nome completo -->
+    <label for="nomeCompleto">Nome completo</label>
+    <input type="text" id="nomeCompleto" name="nomeCompleto" [(ngModel)]="tecnico.nomeCompleto" required #nomeCompleto="ngModel" />
+    <div class="error" *ngIf="nomeCompleto.invalid && nomeCompleto.touched">Nome é obrigatório.</div>
+
+    <!-- Matrícula / Código -->
+    <label for="matricula">Matrícula / Código</label>
+    <input type="text" id="matricula" name="matricula" [(ngModel)]="tecnico.matricula" required #matricula="ngModel" />
+    <div class="error" *ngIf="matricula.invalid && matricula.touched">Campo obrigatório.</div>
+
+    <!-- Especialidade -->
+    <label for="especialidade">Especialidade</label>
+    <input type="text" id="especialidade" name="especialidade" [(ngModel)]="tecnico.especialidade" required #especialidade="ngModel" />
+    <div class="error" *ngIf="especialidade.invalid && especialidade.touched">Especialidade é obrigatória.</div>
+
+    <!-- Setor -->
+    <label for="setor">Setor</label>
+    <input type="text" id="setor" name="setor" [(ngModel)]="tecnico.setor" required #setor="ngModel" />
+    <div class="error" *ngIf="setor.invalid && setor.touched">Setor é obrigatório.</div>
+
+    <!-- Disponibilidade -->
+    <label for="disponibilidade">Disponibilidade</label>
+    <select id="disponibilidade" name="disponibilidade" [(ngModel)]="tecnico.disponibilidade" required #disponibilidade="ngModel">
+      <option value="">Selecione</option>
+      <option value="Disponível">Disponível</option>
+      <option value="Em OS">Em OS</option>
+      <option value="De folga">De folga</option>
+    </select>
+    <div class="error" *ngIf="disponibilidade.invalid && disponibilidade.touched">Campo obrigatório.</div>
+
+    <!-- Certificações -->
+    <label for="certificacoes">Certificações</label>
+    <textarea id="certificacoes" name="certificacoes" [(ngModel)]="tecnico.certificacoes"></textarea>
+
+    <!-- Botão -->
+    <button type="submit" [disabled]="formTecnico.invalid">Cadastrar</button>
+  </form>
+
+  <app-toast></app-toast>
+</div>

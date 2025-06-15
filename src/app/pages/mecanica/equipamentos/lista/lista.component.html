@@ -1,0 +1,85 @@
+<div class="list-container">
+  <h2>Listagem de Equipamentos</h2>
+
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="filtros.nome" type="text" placeholder="Filtrar por nome" />
+      </div>
+
+      <div class="filter-group">
+        <label for="codigo">Código</label>
+        <input id="codigo" [(ngModel)]="filtros.codigo" type="text" placeholder="Filtrar por código" />
+      </div>
+
+      <div class="filter-group">
+        <label for="setor">Setor</label>
+        <input id="setor" [(ngModel)]="filtros.setor" type="text" placeholder="Filtrar por setor" />
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Código</th>
+          <th>Setor</th>
+          <th>Data de Aquisição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eq of equipamentosFiltrados">
+          <td>{{ eq.nome }}</td>
+          <td>{{ eq.codigo }}</td>
+          <td>{{ eq.setor }}</td>
+          <td>{{ formatarData(eq.dataAquisicao) }}</td>
+          <td class="acoes">
+            <button class="visualizar" (click)="visualizar(eq)">👁️</button>
+            <button class="editar" (click)="editar(eq)">✏️</button>
+            <button class="excluir" (click)="excluir(eq)">🗑️</button>
+            <button class="imprimir" (click)="imprimir(eq)">🖨️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de visualização -->
+  <div class="modal-overlay" *ngIf="equipamentoSelecionado">
+    <div class="modal-content">
+      <h3>Detalhes do Equipamento</h3>
+      <div class="detalhes-grid">
+        <div>
+          <label>Nome:</label>
+          <p>{{ equipamentoSelecionado.nome }}</p>
+        </div>
+        <div>
+          <label>Código:</label>
+          <p>{{ equipamentoSelecionado.codigo }}</p>
+        </div>
+        <div>
+          <label>Setor:</label>
+          <p>{{ equipamentoSelecionado.setor }}</p>
+        </div>
+        <div>
+          <label>Descrição:</label>
+          <p>{{ equipamentoSelecionado.descricao }}</p>
+        </div>
+        <div>
+          <label>Data de Aquisição:</label>
+          <p>{{ formatarData(equipamentoSelecionado.dataAquisicao) }}</p>
+        </div>
+      </div>
+      <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
+    </div>
+  </div>
+</div>
