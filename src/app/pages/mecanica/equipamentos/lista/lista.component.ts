@@ -8,6 +8,7 @@ interface Equipamento {
   setor: string;
   descricao: string;
   dataAquisicao: string;
+  vidaUtilEmAnos: number;
 }
 
 @Component({
@@ -33,14 +34,16 @@ export class ListaEqComponent {
       codigo: 'EQ-001',
       setor: 'Manutenção',
       descricao: 'Compressor industrial de alta pressão',
-      dataAquisicao: '2024-03-12'
+      dataAquisicao: '2024-03-12',
+      vidaUtilEmAnos: 5
     },
     {
       nome: 'Esteira XYZ',
       codigo: 'EQ-002',
       setor: 'Produção',
       descricao: 'Esteira transportadora automática',
-      dataAquisicao: '2023-11-25'
+      dataAquisicao: '2023-11-25',
+      vidaUtilEmAnos: 8
     }
   ];
 
@@ -118,4 +121,12 @@ export class ListaEqComponent {
   formatarData(data: string): string {
     return data ? new Date(data).toLocaleDateString('pt-BR') : '';
   }
+
+  calcularFimVidaUtil(data: string, anos: number): string {
+    if (!data || !anos) return '-';
+    const fim = new Date(data);
+    fim.setFullYear(fim.getFullYear() + anos);
+    return fim.toLocaleDateString('pt-BR');
+  }
+
 }

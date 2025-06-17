@@ -21,8 +21,10 @@ export class CadastroEqComponent {
     codigo: '',
     setor: '',
     descricao: '',
-    dataAquisicao: ''
+    dataAquisicao: '',
+    vidaUtilEmAnos: 0
   };
+
 
   cadastrar(form: NgForm) {
     console.log('Equipamento salvo:', this.equipamento);

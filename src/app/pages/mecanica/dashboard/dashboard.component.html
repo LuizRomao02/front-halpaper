@@ -1,0 +1,105 @@
+<div class="dashboard-container">
+  <h2>Dashboard - Módulo Mecânica</h2>
+
+  <!-- Cards de Métricas -->
+  <div class="cards-metricas">
+    <div class="card kpi total">
+      <h3>{{ totalOS }}</h3>
+      <p>Total de Ordens de Serviço</p>
+    </div>
+    <div class="card kpi andamento">
+      <h3>{{ osEmAndamento }}</h3>
+      <p>Em Andamento</p>
+    </div>
+    <div class="card kpi concluida">
+      <h3>{{ osConcluidas }}</h3>
+      <p>Concluídas</p>
+    </div>
+    <div class="card kpi tempo">
+      <h3>{{ tempoMedioConclusao }}h</h3>
+      <p>Tempo Médio</p>
+    </div>
+    <div class="card kpi tecnicos">
+      <h3>{{ tecnicosDisponiveis }}</h3>
+      <p>Técnicos Disponíveis</p>
+    </div>
+  </div>
+
+  <!-- Gráfico de Status -->
+  <div class="graficos-section">
+    <div class="graficos-grid">
+      <div class="grafico-card">
+        <h4>Status das Ordens de Serviço</h4>
+        <canvas
+          baseChart
+          [data]="graficoStatus.data"
+          [type]="'pie'"
+          [options]="graficoStatus.options">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- Equipamentos Críticos -->
+  <div class="secao critica">
+    <h3>Equipamentos com Vida Útil Baixa</h3>
+    <div class="equipamentos-grid">
+      <div class="equipamento-card" *ngFor="let eq of equipamentosCriticos">
+        <h4>{{ eq.nome }}</h4>
+        <div class="progress-bar">
+          <div class="fill" [style.width.%]="eq.vidaUtil"></div>
+        </div>
+        <p>{{ eq.vidaUtil }}% de vida útil</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranking de Técnicos -->
+  <div class="secao ranking">
+    <h3>Ranking Técnicos</h3>
+    <div class="ranking-grid">
+      <div class="ranking-card" *ngFor="let t of rankingTecnicos; let i = index">
+        <div class="medalha medalha-{{ i + 1 }}">{{ i + 1 }}</div>
+        <div>
+          <h4>{{ t.nome }}</h4>
+          <p>{{ t.qtdOS }} OS - Média: {{ t.tempoMedio }}h</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Últimas OS -->
+  <div class="secao ultimas-os">
+    <h3>Últimas Ordens de Serviço</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Setor</th>
+          <th>Equipamento</th>
+          <th>Técnico</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let os of ultimasOS">
+          <td>{{ os.data }}</td>
+          <td>{{ os.setor }}</td>
+          <td>{{ os.equipamento }}</td>
+          <td>{{ os.tecnico }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'badge-novo': os.status === 'Novo',
+              'badge-andamento': os.status === 'Em Andamento',
+              'badge-concluido': os.status === 'Concluído'
+            }">
+              {{ os.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -18,6 +18,7 @@ interface MenuItem {
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
 })
+
 export class MainLayoutComponent implements OnInit {
   isSidebarCollapsed = false;
   sistemaCarregado = false;
@@ -49,7 +50,7 @@ export class MainLayoutComponent implements OnInit {
         this.router.navigate(['/gestao/admin']);
         break;
       case 'MECÂNICA':
-        this.router.navigate(['/mecanica/equipamentos']);
+        this.router.navigate(['/mecanica/dashboard']);
         break;
       case 'LOGÍSTICA':
         this.router.navigate(['/logistica/pecas']);
@@ -78,16 +79,16 @@ export class MainLayoutComponent implements OnInit {
   menus: { [key: string]: MenuItem[] } = {
     GESTÃO: [
       {
-        label: 'Usuarios',
+        label: 'Usuários',
         icon: '👥',
         children: [
           { label: 'Cadastrar', icon: '➕', route: '/gestao/admin' },
           { label: 'Listar', icon: '📄', route: '/gestao/admin/list' },
         ],
       },
-       {
-        label: 'Estrutura Organizacional',
-        icon: '🏢',
+      {
+        label: 'Estrutura Org.',
+        icon: '🏛️',
         children: [
           { label: 'Cadastrar', icon: '➕', route: '/gestao/estrutura' },
           { label: 'Listar', icon: '📄', route: '/gestao/estrutura/list' },
@@ -95,43 +96,49 @@ export class MainLayoutComponent implements OnInit {
       },
       { label: 'Perfis de Acesso', icon: '🔐', route: '/gestao/perfis' },
     ],
+
     MECÂNICA: [
-      { label: 'Ordem de Serviço',
+      { label: 'Dashboard', icon: '📊', route: '/mecanica/dashboard' },
+      {
+        label: 'Ordem de Serviço',
         icon: '📝',
         children: [
           { label: 'Cadastrar', icon: '➕', route: '/mecanica/ordemservico/cadastro' },
-          { label: 'Listar', icon: '📋', route: '/mecanica/ordemservico/lista' },
+          { label: 'Listar', icon: '📄', route: '/mecanica/ordemservico/lista' },
         ],
       },
-      { label: 'Equipamentos',
-       icon: '🛠️',
-       children: [
-         { label: 'Cadastrar', icon: '➕', route: '/mecanica/equipamentos/cadastro' },
-         { label: 'Listar', icon: '📋', route: '/mecanica/equipamentos/lista' },
-       ],
-      },
-      { label: 'Técnicos',
-       icon: '🧰',
-       children: [
-         { label: 'Cadastrar', icon: '➕', route: '/mecanica/tecnicos/cadastro' },
-         { label: 'Listar', icon: '📋', route: '/mecanica/tecnicos/lista' },
-       ],
+      {
+        label: 'Equipamentos',
+        icon: '⚙️',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/equipamentos/cadastro' },
+          { label: 'Listar', icon: '📄', route: '/mecanica/equipamentos/lista' },
+        ],
       },
       {
-        label: 'Prontuário Técnico',
-        icon: '📋',
-        route: '/mecanica/prontuario',
+        label: 'Técnicos',
+        icon: '👨‍🔧',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/tecnicos/cadastro' },
+          { label: 'Listar', icon: '📄', route: '/mecanica/tecnicos/lista' },
+        ],
+      },
+      {
+        label: 'Prontuário',
+        icon: '📁',
+        children: [
+          { label: 'Técnico', icon: '👨‍🔧', route: '/mecanica/prontuario/tecnico' },
+          { label: 'Equipamento', icon: '⚙️', route: '/mecanica/prontuario/equipamento' },
+        ],
       },
     ],
+
     LOGÍSTICA: [
       { label: 'Peças e Estoque', icon: '📦', route: '/logistica/pecas' },
     ],
+
     PRODUÇÃO: [
-      {
-        label: 'Acompanhamento',
-        icon: '📊',
-        route: '/producao/acompanhamento',
-      },
+      { label: 'Acompanhamento', icon: '📈', route: '/producao/acompanhamento' },
     ],
   };
 }

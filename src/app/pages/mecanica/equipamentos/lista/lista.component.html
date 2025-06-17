@@ -33,6 +33,8 @@
           <th>Código</th>
           <th>Setor</th>
           <th>Data de Aquisição</th>
+          <th>Vida Útil (anos)</th>
+          <th>Fim Estimado</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -42,6 +44,8 @@
           <td>{{ eq.codigo }}</td>
           <td>{{ eq.setor }}</td>
           <td>{{ formatarData(eq.dataAquisicao) }}</td>
+          <td>{{ eq.vidaUtilEmAnos }}</td>
+          <td>{{ calcularFimVidaUtil(eq.dataAquisicao, eq.vidaUtilEmAnos) }}</td>
           <td class="acoes">
             <button class="visualizar" (click)="visualizar(eq)">👁️</button>
             <button class="editar" (click)="editar(eq)">✏️</button>
@@ -53,31 +57,18 @@
     </table>
   </div>
 
-  <!-- Modal de visualização -->
+  <!-- Modal -->
   <div class="modal-overlay" *ngIf="equipamentoSelecionado">
     <div class="modal-content">
-      <h3>Detalhes do Equipamento</h3>
+      <h3>Ficha do Equipamento</h3>
       <div class="detalhes-grid">
-        <div>
-          <label>Nome:</label>
-          <p>{{ equipamentoSelecionado.nome }}</p>
-        </div>
-        <div>
-          <label>Código:</label>
-          <p>{{ equipamentoSelecionado.codigo }}</p>
-        </div>
-        <div>
-          <label>Setor:</label>
-          <p>{{ equipamentoSelecionado.setor }}</p>
-        </div>
-        <div>
-          <label>Descrição:</label>
-          <p>{{ equipamentoSelecionado.descricao }}</p>
-        </div>
-        <div>
-          <label>Data de Aquisição:</label>
-          <p>{{ formatarData(equipamentoSelecionado.dataAquisicao) }}</p>
-        </div>
+        <div><strong>Nome:</strong> {{ equipamentoSelecionado.nome }}</div>
+        <div><strong>Código:</strong> {{ equipamentoSelecionado.codigo }}</div>
+        <div><strong>Setor:</strong> {{ equipamentoSelecionado.setor }}</div>
+        <div><strong>Descrição:</strong> {{ equipamentoSelecionado.descricao }}</div>
+        <div><strong>Data de Aquisição:</strong> {{ formatarData(equipamentoSelecionado.dataAquisicao) }}</div>
+        <div><strong>Vida Útil:</strong> {{ equipamentoSelecionado.vidaUtilEmAnos }} anos</div>
+        <div><strong>Fim Estimado:</strong> {{ calcularFimVidaUtil(equipamentoSelecionado.dataAquisicao, equipamentoSelecionado.vidaUtilEmAnos) }}</div>
       </div>
       <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
     </div>

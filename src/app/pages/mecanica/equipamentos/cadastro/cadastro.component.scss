@@ -1,58 +1,87 @@
 .form-container {
-  max-width: 700px;
-  margin: auto;
+  max-width: 1000px;
+  margin: 40px auto;
   background: white;
-  padding: 2rem;
+  padding: 2rem 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
 
   h2 {
-    margin-bottom: 1.5rem;
     color: #004d40;
+    margin-bottom: 1.5rem;
+    font-size: 24px;
   }
 
-  label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: 600;
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
   }
 
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.6rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-family: 'Segoe UI', sans-serif;
-  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
 
-  textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #004d40;
+    }
 
-  button {
-    margin-top: 2rem;
-    width: 100%;
-    padding: 0.75rem;
-    background: #004d40;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    input,
+    textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      resize: none;
 
-    &:hover {
-      background: #00796b;
+      &:focus {
+        outline: none;
+        border-color: #00796b;
+        box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    .error {
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    &.full {
+      grid-column: 1 / -1;
     }
   }
 
-  .error {
-  color: #c62828;
-  font-size: 0.875rem;
-  margin-top: 0.2rem;
-}
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 
-}
+    button {
+      background-color: #004d40;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
 
+      &:hover {
+        background-color: #00695c;
+        transform: scale(1.03);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

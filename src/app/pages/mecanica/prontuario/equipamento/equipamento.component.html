@@ -1,0 +1,68 @@
+<div class="prontuario-equipamentos-container">
+  <h2>Prontuário dos Equipamentos</h2>
+
+  <!-- Filtros -->
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="filtro.nome" type="text" placeholder="Filtrar por nome" />
+      </div>
+
+      <div class="filter-group">
+        <label for="codigo">Código</label>
+        <input id="codigo" [(ngModel)]="filtro.codigo" type="text" placeholder="Filtrar por código" />
+      </div>
+
+      <div class="filter-group">
+        <label for="setor">Setor</label>
+        <select id="setor" [(ngModel)]="filtro.setor">
+          <option value="">Todos</option>
+          <option *ngFor="let s of setores">{{ s }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="vidaUtil">Vida Útil (%)</label>
+        <input id="vidaUtil" type="range" min="0" max="100" [(ngModel)]="filtro.vidaUtil" />
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="equipamentos-cards">
+    <div class="equipamento-card" *ngFor="let eq of equipamentosFiltrados()" (click)="visualizar(eq)">
+      <div class="card-header">
+        <h3>{{ eq.nome }}</h3>
+        <span class="tag">{{ eq.setor }}</span>
+      </div>
+      <p><strong>Código:</strong> {{ eq.codigo }}</p>
+      <p><strong>Local:</strong> {{ eq.localizacao }}</p>
+      <div class="vida-bar">
+        <div class="vida-preenchida" [style.width.%]="eq.vidaUtil"></div>
+      </div>
+      <p class="vida-label">Vida útil: {{ eq.vidaUtil }}%</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="equipamentoSelecionado" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Detalhes do Equipamento</h3>
+      <div class="detalhes-grid">
+        <div><strong>Nome:</strong> {{ equipamentoSelecionado.nome }}</div>
+        <div><strong>Código:</strong> {{ equipamentoSelecionado.codigo }}</div>
+        <div><strong>Setor:</strong> {{ equipamentoSelecionado.setor }}</div>
+        <div><strong>Localização:</strong> {{ equipamentoSelecionado.localizacao }}</div>
+        <div><strong>Vida útil:</strong> {{ equipamentoSelecionado.vidaUtil }}%</div>
+        <div><strong>Descrição:</strong> {{ equipamentoSelecionado.descricao }}</div>
+      </div>
+      <button class="fechar" (click)="fecharModal()">✕ Fechar</button>
+    </div>
+  </div>
+</div>

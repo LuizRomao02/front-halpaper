@@ -1,0 +1,84 @@
+<div class="prontuario-container">
+  <h2>Prontuário Técnico</h2>
+
+  <!-- Filtros -->
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="filtro.nome" type="text" placeholder="Filtrar por nome" />
+      </div>
+
+      <div class="filter-group">
+        <label for="especialidade">Especialidade</label>
+        <select id="especialidade" [(ngModel)]="filtro.especialidade">
+          <option value="">Todas</option>
+          <option *ngFor="let esp of especialidades">{{ esp }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="setor">Setor</label>
+        <select id="setor" [(ngModel)]="filtro.setor">
+          <option value="">Todos</option>
+          <option *ngFor="let s of setores">{{ s }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="disponibilidade">Disponibilidade</label>
+        <select id="disponibilidade" [(ngModel)]="filtro.disponibilidade">
+          <option value="">Todos</option>
+          <option value="Disponível">Disponível</option>
+          <option value="Em OS">Em OS</option>
+          <option value="De folga">De folga</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
+  </div>
+
+  <!-- Legenda -->
+  <div class="legenda">
+    <span><span class="bolinha disponível"></span> Disponível</span>
+    <span><span class="bolinha em-os"></span> Em OS</span>
+    <span><span class="bolinha de-folga"></span> De folga</span>
+  </div>
+
+  <!-- Cards técnicos -->
+  <div class="tecnicos-cards">
+    <div
+      class="card"
+      *ngFor="let tecnico of tecnicosFiltrados()"
+      (click)="visualizar(tecnico)"
+    >
+      <div class="card-header">
+        <h3>{{ tecnico.nome }}</h3>
+        <span class="status" [ngClass]="formatarClasse(tecnico.disponibilidade)"></span>
+      </div>
+      <p><strong>Matrícula:</strong> {{ tecnico.matricula }}</p>
+      <p><strong>Especialidade:</strong> {{ tecnico.especialidade }}</p>
+      <p><strong>Setor:</strong> {{ tecnico.setor }}</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="tecnicoSelecionado" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Ficha Técnica</h3>
+      <div class="detalhes-grid">
+        <div><strong>Nome:</strong> {{ tecnicoSelecionado.nome }}</div>
+        <div><strong>Matrícula:</strong> {{ tecnicoSelecionado.matricula }}</div>
+        <div><strong>Especialidade:</strong> {{ tecnicoSelecionado.especialidade }}</div>
+        <div><strong>Setor:</strong> {{ tecnicoSelecionado.setor }}</div>
+        <div><strong>Disponibilidade:</strong> {{ tecnicoSelecionado.disponibilidade }}</div>
+        <div><strong>Certificações:</strong> {{ tecnicoSelecionado.certificacoes }}</div>
+      </div>
+      <button class="fechar" (click)="fecharModal()">✕ Fechar</button>
+    </div>
+  </div>
+</div>
