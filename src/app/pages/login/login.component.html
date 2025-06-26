@@ -1,13 +1,25 @@
+<!-- src/app/pages/login/login.component.html -->
 <div class="login-container">
   <div class="login-box">
-    <img src="assets/images/logotipo_sem_fundo.png" alt="HaLpaper logo" class="logo" />
-
+    <img src="assets/images/logotipo_sem_fundo.png"
+         alt="HaLpaper logo" class="logo"/>
     <h3>Realize o Login</h3>
-
-    <form>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Senha" />
-      <button type="submit">Entrar</button>
+    <form (ngSubmit)="submit()" #loginForm="ngForm">
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Email"
+        required />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Senha"
+        required />
+      <button type="submit" [disabled]="!loginForm.valid">
+        Entrar
+      </button>
     </form>
   </div>
 </div>

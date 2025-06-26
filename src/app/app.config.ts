@@ -1,10 +1,8 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import {
-  provideClientHydration,
-  withEventReplay,
-} from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideZoneChangeDetection } from '@angular/core';
 
 import { routes } from './app.routes';
@@ -15,6 +13,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor])
+    ),
+    importProvidersFrom(FormsModule),  // <<< importa o FormsModule para ngModel/ngForm
   ],
 };

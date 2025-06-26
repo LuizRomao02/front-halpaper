@@ -38,7 +38,9 @@
     <textarea id="certificacoes" name="certificacoes" [(ngModel)]="tecnico.certificacoes"></textarea>
 
     <!-- Botão -->
-    <button type="submit" [disabled]="formTecnico.invalid">Cadastrar</button>
+    <div class="form-actions">
+      <button type="submit" [disabled]="formTecnico.invalid">Cadastrar</button>
+    </div>
   </form>
 
   <app-toast></app-toast>

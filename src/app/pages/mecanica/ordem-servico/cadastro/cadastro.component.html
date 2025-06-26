@@ -76,7 +76,9 @@
     <input type="text" id="assinatura" name="assinatura" [(ngModel)]="ordemServico.assinatura" />
 
     <!-- BOTÃO -->
-    <button type="submit" [disabled]="osForm.invalid">Cadastrar</button>
+    <div class="form-actions">
+      <button type="submit" [disabled]="osForm.invalid">Cadastrar</button>
+    </div>
   </form>
 
   <app-toast></app-toast>

@@ -1,9 +1,22 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet, RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+// src/app/layouts/main-layout/main-layout.component.ts
+import {
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID
+} from '@angular/core';
+import {
+  CommonModule,
+  isPlatformBrowser
+} from '@angular/common';
+import {
+  RouterModule,
+  RouterOutlet,
+  Router
+} from '@angular/router';
+import { filter, take } from 'rxjs';
+import { AuthService } from '../../core/auth/auth.service';
 
-// ✅ Definindo o tipo com children opcionais
 interface MenuItem {
   label: string;
   icon: string;
@@ -18,49 +31,125 @@ interface MenuItem {
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
 })
-
 export class MainLayoutComponent implements OnInit {
-  isSidebarCollapsed = false;
-  sistemaCarregado = false;
-  microsservicoAtual = 'MECÂNICA';
+  isSidebarCollapsed   = false;
+  sistemaCarregado     = false;
+  microsservicoAtual   = '';
   submenuAberto: string | null = null;
 
-  sections = ['MECÂNICA', 'PRODUÇÃO', 'LOGÍSTICA', 'GESTÃO'];
+  /** só estas sections para as quais o usuário tem roles */
+  sections: string[] = [];
+
+  /** configurações de menu para cada sistema */
+  menus: Record<string, MenuItem[]> = {
+    GESTAO: [
+      {
+        label: 'Usuários',
+        icon: '👥',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/gestao/admin' },
+          { label: 'Listar',    icon: '📄', route: '/gestao/admin/list' },
+        ],
+      },
+      {
+        label: 'Estrutura Org.',
+        icon: '🏛️',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/gestao/estrutura' },
+          { label: 'Listar',    icon: '📄', route: '/gestao/estrutura/list' },
+        ],
+      }
+    ],
+    MECANICA: [
+      { label: 'Dashboard', icon: '📊', route: '/mecanica/dashboard' },
+      {
+        label: 'Ordem de Serviço',
+        icon: '📝',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/ordemservico/cadastro' },
+          { label: 'Listar',    icon: '📄', route: '/mecanica/ordemservico/lista' },
+        ],
+      },
+      {
+        label: 'Equipamentos',
+        icon: '⚙️',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/equipamentos/cadastro' },
+          { label: 'Listar',    icon: '📄', route: '/mecanica/equipamentos/lista' },
+        ],
+      },
+      {
+        label: 'Técnicos',
+        icon: '👨‍🔧',
+        children: [
+          { label: 'Cadastrar', icon: '➕', route: '/mecanica/tecnicos/cadastro' },
+          { label: 'Listar',    icon: '📄', route: '/mecanica/tecnicos/lista' },
+        ],
+      },
+      {
+        label: 'Prontuário',
+        icon: '📁',
+        children: [
+          { label: 'Técnico',    icon: '👨‍🔧', route: '/mecanica/prontuario/tecnico' },
+          { label: 'Equipamento',icon: '⚙️', route: '/mecanica/prontuario/equipamento' },
+        ],
+      },
+    ],
+    LOGISTICA: [
+      { label: 'Peças e Estoque', icon: '📦', route: '/logistica/pecas' },
+    ],
+    PRODUCAO: [
+      { label: 'Acompanhamento', icon: '📈', route: '/producao/acompanhamento' },
+    ]
+  };
 
   constructor(
     private router: Router,
+    private auth: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const savedSystem = localStorage.getItem('sistemaSelecionado');
-      if (savedSystem && this.sections.includes(savedSystem)) {
-        this.microsservicoAtual = savedSystem;
-      }
-    }
+      this.auth.getRoles$()
+        .pipe(
+          filter(roles => roles.length > 0), // espera ao menos 1 role
+          take(1)
+        )
+        .subscribe(roles => {
+          this.sections = roles
+            .map(r => r.replace(/^ROLE_/, '').toUpperCase())
+            .filter(s => !!this.menus[s]);
 
-    this.sistemaCarregado = true;
+          this.microsservicoAtual =
+            localStorage.getItem('sistemaSelecionado')?.toUpperCase()
+            || this.sections[0]
+            || '';
+
+          this.sistemaCarregado = true;
+        });
+    } else {
+      // em SSR apenas habilita o layout sem esperar
+      this.sistemaCarregado = true;
+    }
   }
 
   selecionarSistema(sistema: string) {
     this.microsservicoAtual = sistema;
-    switch (sistema.toUpperCase()) {
-      case 'GESTÃO':
+    localStorage.setItem('sistemaSelecionado', sistema);
+    switch (sistema) {
+      case 'GESTAO':
         this.router.navigate(['/gestao/admin']);
         break;
-      case 'MECÂNICA':
+      case 'MECANICA':
         this.router.navigate(['/mecanica/dashboard']);
         break;
-      case 'LOGÍSTICA':
+      case 'LOGISTICA':
         this.router.navigate(['/logistica/pecas']);
         break;
-      case 'PRODUÇÃO':
+      case 'PRODUCAO':
         this.router.navigate(['/producao/acompanhamento']);
         break;
-    }
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('sistemaSelecionado', sistema);
     }
   }
 
@@ -72,73 +161,25 @@ export class MainLayoutComponent implements OnInit {
     this.submenuAberto = this.submenuAberto === label ? null : label;
   }
 
+  /** retorna só o menu do sistema ativo */
   get menuAtual(): MenuItem[] {
     return this.menus[this.microsservicoAtual] || [];
   }
 
-  menus: { [key: string]: MenuItem[] } = {
-    GESTÃO: [
-      {
-        label: 'Usuários',
-        icon: '👥',
-        children: [
-          { label: 'Cadastrar', icon: '➕', route: '/gestao/admin' },
-          { label: 'Listar', icon: '📄', route: '/gestao/admin/list' },
-        ],
+  /** chama o logout e redireciona para /login */
+  logout(): void {
+    this.auth.logout().subscribe({
+      next: () => {
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.removeItem('sistemaSelecionado');
+        }
+        this.router.navigate(['/login']);
       },
-      {
-        label: 'Estrutura Org.',
-        icon: '🏛️',
-        children: [
-          { label: 'Cadastrar', icon: '➕', route: '/gestao/estrutura' },
-          { label: 'Listar', icon: '📄', route: '/gestao/estrutura/list' },
-        ],
-      },
-      { label: 'Perfis de Acesso', icon: '🔐', route: '/gestao/perfis' },
-    ],
-
-    MECÂNICA: [
-      { label: 'Dashboard', icon: '📊', route: '/mecanica/dashboard' },
-      {
-        label: 'Ordem de Serviço',
-        icon: '📝',
-        children: [
-          { label: 'Cadastrar', icon: '➕', route: '/mecanica/ordemservico/cadastro' },
-          { label: 'Listar', icon: '📄', route: '/mecanica/ordemservico/lista' },
-        ],
-      },
-      {
-        label: 'Equipamentos',
-        icon: '⚙️',
-        children: [
-          { label: 'Cadastrar', icon: '➕', route: '/mecanica/equipamentos/cadastro' },
-          { label: 'Listar', icon: '📄', route: '/mecanica/equipamentos/lista' },
-        ],
-      },
-      {
-        label: 'Técnicos',
-        icon: '👨‍🔧',
-        children: [
-          { label: 'Cadastrar', icon: '➕', route: '/mecanica/tecnicos/cadastro' },
-          { label: 'Listar', icon: '📄', route: '/mecanica/tecnicos/lista' },
-        ],
-      },
-      {
-        label: 'Prontuário',
-        icon: '📁',
-        children: [
-          { label: 'Técnico', icon: '👨‍🔧', route: '/mecanica/prontuario/tecnico' },
-          { label: 'Equipamento', icon: '⚙️', route: '/mecanica/prontuario/equipamento' },
-        ],
-      },
-    ],
-
-    LOGÍSTICA: [
-      { label: 'Peças e Estoque', icon: '📦', route: '/logistica/pecas' },
-    ],
-
-    PRODUÇÃO: [
-      { label: 'Acompanhamento', icon: '📈', route: '/producao/acompanhamento' },
-    ],
-  };
+      error: err => {
+        console.error('Logout falhou', err);
+        // mesmo assim redireciona
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 }

@@ -20,6 +20,11 @@
         <input type="text" [(ngModel)]="filtros.disponibilidade" />
       </div>
     </div>
+
+     <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
   </div>
 
   <div class="table-container">

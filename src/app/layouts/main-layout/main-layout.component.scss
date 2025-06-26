@@ -195,6 +195,26 @@
       z-index: 10;
       box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
 
+      .logout-btn {
+        background-color: #e53935;
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-left: 50px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+
+        &:hover {
+          background-color: #d32f2f;
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
       .system-title {
         font-weight: 700;
         font-size: 1.1rem;

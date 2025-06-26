@@ -75,6 +75,19 @@ export class ListaTecComponent {
     console.log('Editar técnico:', tecnico);
   }
 
+  filtrar() {
+    console.log('Filtros aplicados:', this.filtros);
+  }
+
+  limpar() {
+    this.filtros = {
+      nome: '',
+      especialidade: '',
+      setor: '',
+      disponibilidade: ''
+    };
+  }
+
   excluir(tecnico: Tecnico) {
     console.log('Excluir técnico:', tecnico);
   }
