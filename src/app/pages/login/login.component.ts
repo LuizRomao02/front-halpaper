@@ -1,19 +1,18 @@
-// src/app/pages/login/login.component.ts
-import { Component }               from '@angular/core';
-import { CommonModule }            from '@angular/common';
-import { FormsModule }             from '@angular/forms';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { AuthService }             from '../../core/auth/auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email    = '';
+  email = '';
   password = '';
 
   constructor(
@@ -45,7 +44,7 @@ export class LoginComponent {
       } else if (this.auth.hasRole('ROLE_PRODUCAO')) {
         this.router.navigate(['/producao/acompanhamento']);
       } else {
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       }
     });
   }
