@@ -77,6 +77,24 @@ export class AuthService {
     return this.isBrowser ? localStorage.getItem('access_token') : null;
   }
 
+  isTokenExpired(token?: string): boolean {
+    if (!token) return true;
+    try {
+      const payload: any = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp as number;
+      if (!exp) return true;
+      // exp é em segundos
+      return exp * 1000 < Date.now();
+    } catch {
+      return true;
+    }
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getAccessToken();
+    return !!token && !this.isTokenExpired(token);
+  }
+
   private extractRoles(token: string): string[] {
     try {
       const payload: any = JSON.parse(atob(token.split('.')[1]));

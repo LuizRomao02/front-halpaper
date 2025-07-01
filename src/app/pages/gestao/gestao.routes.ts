@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { AdminListComponent } from './admin/list/admin-list.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { UsuarioListComponent } from './usuario/usuario-list/usuario-list.component';
 import { EstruturaOrganizacionalComponent } from './estrutura-organizacional/estrutura-organizacional.component';
 import { EstruturaOrganizacionalListComponent } from './estrutura-organizacional/list/estrutura-organizacional-list.component';
 
 export const GESTAO_ROUTES: Routes = [
   {
-    path: 'admin',
+    path: 'usuario',
     children: [
-      { path: '', component: AdminComponent },
-      { path: 'list', component: AdminListComponent },
+      { path: '', component: UsuarioComponent },
+      { path: 'list', component: UsuarioListComponent },
     ],
   },
   {

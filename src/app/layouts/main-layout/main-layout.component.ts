@@ -24,8 +24,8 @@ export class MainLayoutComponent implements OnInit {
     GESTAO: [
       {
         label: 'Usuários', icon: '👥', children: [
-          { label: 'Cadastrar', icon: '➕', route: '/gestao/admin' },
-          { label: 'Listar',   icon: '📄', route: '/gestao/admin/list' }
+          { label: 'Cadastrar', icon: '➕', route: '/gestao/usuario' },
+          { label: 'Listar',   icon: '📄', route: '/gestao/usuario/usuario-list' }
         ]
       },
       {

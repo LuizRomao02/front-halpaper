@@ -1,9 +1,15 @@
+<app-toast #toast></app-toast>
+<app-loading [visible]="isLoading"></app-loading>
+
 <div class="form-container">
   <h2>Cadastro do Usuário</h2>
   <form (ngSubmit)="cadastrar()" #formRef="ngForm">
 
     <label for="nome">Nome</label>
     <input id="nome" name="nome" type="text" [(ngModel)]="nome" placeholder="Digite o nome" required />
+
+    <label for="sobrenome">Sobrenome</label>
+    <input id="sobrenome" name="sobrenome" type="text" [(ngModel)]="sobrenome" placeholder="Digite o sobrenome" required />
 
     <label for="email">E-mail</label>
     <input id="email" name="email" type="email" [(ngModel)]="email" placeholder="Digite o e-mail" required />
@@ -20,6 +26,6 @@
       </label>
     </div>
 
-    <button type="submit">Cadastrar</button>
+    <button type="submit" [disabled]="isLoading">Cadastrar</button>
   </form>
 </div>

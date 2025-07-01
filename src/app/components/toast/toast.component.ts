@@ -11,9 +11,17 @@ import { CommonModule } from '@angular/common';
 export class ToastComponent {
   visible = false;
   message = '';
+  type: 'success' | 'error' | 'warning' = 'success';
 
-  show(msg: string, duration = 3000): void {
+  /**
+   * Exibe a toast com mensagem e tipo (success | error)
+   * @param msg  mensagem a exibir
+   * @param type 'success' ou 'error'
+   * @param duration em milissegundos
+   */
+  show(msg: string, type: 'success' | 'error' | 'warning' = 'success', duration = 3000): void {
     this.message = msg;
+    this.type = type;
     this.visible = true;
 
     setTimeout(() => {
