@@ -1,1 +1,116 @@
-<p>usuario-list works!</p>
+<app-toast #toast></app-toast>
+<app-loading [visible]="isLoading"></app-loading>
+
+<div class="list-container">
+  <h2>Listagem de Usuários</h2>
+
+  <div class="filter-section">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label for="filtro-fullName">Nome Completo</label>
+        <input id="filtro-fullName" [(ngModel)]="filtros.fullName" placeholder="Filtrar por nome" />
+      </div>
+      <div class="filter-group">
+        <label for="filtro-username">Username</label>
+        <input id="filtro-username" [(ngModel)]="filtros.username" placeholder="Filtrar por username" />
+      </div>
+      <div class="filter-group">
+        <label for="filtro-email">E-mail</label>
+        <input id="filtro-email" [(ngModel)]="filtros.email" placeholder="Filtrar por e-mail" />
+      </div>
+    </div>
+    <div class="button-group">
+      <button (click)="filtrar()">Filtrar</button>
+      <button class="clear" (click)="limpar()">Limpar</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome Completo</th>
+          <th>Username</th>
+          <th>E-mail</th>
+          <th>Perfis</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of usuarios">
+          <td>{{ u.fullName }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.roles.join(', ') }}</td>
+          <td class="acoes">
+            <button class="visualizar" (click)="visualizar(u)">👁️</button>
+            <button class="editar" (click)="openRoleEditor(u)">✏️</button>
+            <button class="excluir"   (click)="openDeleteConfirmation(u)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="irParaPagina(currentPage - 1)" [disabled]="currentPage === 0">« Anterior</button>
+    <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+    <button (click)="irParaPagina(currentPage + 1)" [disabled]="currentPage + 1 === totalPages">Próxima »</button>
+  </div>
+
+  <!-- Modal de Detalhes -->
+  <div class="modal-overlay" *ngIf="selectedUser">
+    <div class="modal-content">
+      <h3>Detalhes do Usuário</h3>
+      <app-loading *ngIf="isDetailLoading"></app-loading>
+      <div *ngIf="!isDetailLoading && selectedUser" class="detalhes-grid">
+        <div><strong>Perfis:</strong> {{ selectedUser.roles.join(', ') }}</div>
+        <div><strong>Ativo:</strong> {{ selectedUser.isEnabled }}</div>
+        <div><strong>Username:</strong> {{ selectedUser.username }}</div>
+        <div><strong>Nome:</strong> {{ selectedUser.firstName }} {{ selectedUser.lastName }}</div>
+        <div><strong>Email:</strong> {{ selectedUser.email }}</div>
+        <div><strong>Email Verificado:</strong> {{ selectedUser.emailVerified }}</div>
+        <div><strong>Token Verification:</strong> {{ selectedUser.tokenVerification }}</div>
+        <div><strong>Criado em:</strong> {{ selectedUser.createdAt }}</div>
+        <div><strong>Atualizado em:</strong> {{ selectedUser.updatedAt }}</div>
+      </div>
+      <button class="fechar" (click)="fecharVisualizacao()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Modal de edição de roles -->
+  <div class="modal-overlay" *ngIf="editingUser">
+      <div class="modal-content">
+        <h3>Atualizar Perfis de {{ editingUser?.fullName }}</h3>
+        <div class="checkbox-group">
+        <label *ngFor="let r of rolesOptions" class="checkbox-label">
+          <input
+              type="checkbox"
+              #cb
+              [checked]="editRoles.includes(r)"
+              (change)="onRoleToggle(r, cb.checked)"
+            />
+            {{ r }}
+        </label>
+        <div class="button-group">
+          <button (click)="saveRoles()">Salvar</button>
+          <button class="clear" (click)="cancelEdit()">Cancelar</button>
+        </div>
+      </div>
+  </div>
+
+  <!-- Modal de Confirmação de Exclusão -->
+  <div class="modal-overlay" *ngIf="userToDelete">
+    <div class="modal-content">
+      <h3>Confirmar Exclusão</h3>
+      <p>
+        Tem certeza que deseja excluir o usuário
+        "<strong>{{ userToDelete?.fullName }}</strong>"?
+      </p>
+      <div class="button-group">
+        <button (click)="confirmDelete()">Sim, excluir</button>
+        <button class="clear" (click)="cancelDelete()">Não</button>
+      </div>
+    </div>
+  </div>
+</div>

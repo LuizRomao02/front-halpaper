@@ -51,7 +51,6 @@ export class UsuarioComponent {
     }
 
     const payload: CreateUserPayload = {
-      name: `${this.nome} ${this.sobrenome}`,
       email: this.email,
       password: this.senha,
       firstName: this.nome,

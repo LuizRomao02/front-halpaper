@@ -22,10 +22,11 @@ export class MainLayoutComponent implements OnInit {
 
   menus: Record<string, MenuItem[]> = {
     GESTAO: [
+    // main-layout.component.ts (menus.GESTAO)
       {
         label: 'Usuários', icon: '👥', children: [
           { label: 'Cadastrar', icon: '➕', route: '/gestao/usuario' },
-          { label: 'Listar',   icon: '📄', route: '/gestao/usuario/usuario-list' }
+          { label: 'Listar',   icon: '📄', route: '/gestao/usuario/list' }  // <-- aqui
         ]
       },
       {

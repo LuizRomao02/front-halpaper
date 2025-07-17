@@ -46,7 +46,7 @@
           <td>{{ formatarData(eq.dataAquisicao) }}</td>
           <td>{{ eq.vidaUtilEmAnos }}</td>
           <td>{{ calcularFimVidaUtil(eq.dataAquisicao, eq.vidaUtilEmAnos) }}</td>
-          <td class="acoes">
+          <td>
             <button class="visualizar" (click)="visualizar(eq)">👁️</button>
             <button class="editar" (click)="editar(eq)">✏️</button>
             <button class="excluir" (click)="excluir(eq)">🗑️</button>

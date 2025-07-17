@@ -20,10 +20,18 @@
     <label>Acessos</label>
     <div class="checkbox-group">
       <label *ngFor="let acesso of acessosDisponiveis" class="checkbox-label">
-        <input type="checkbox" [value]="acesso" (change)="toggleAcesso(acesso)"
-          [checked]="acessosSelecionados.includes(acesso)" />
+        <input
+          type="checkbox"
+          [value]="acesso"
+          (change)="toggleAcesso(acesso)"
+          [checked]="acessosSelecionados.includes(acesso)"
+        />
         {{ acesso }}
       </label>
+    </div>
+    <!-- mensagem de erro se submeter sem nenhum checkbox marcado -->
+    <div *ngIf="formRef.submitted && acessosSelecionados.length === 0" class="error">
+      Seleciona ao menos um tipo de acesso.
     </div>
 
     <button type="submit" [disabled]="isLoading">Cadastrar</button>

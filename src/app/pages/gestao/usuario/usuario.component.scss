@@ -65,4 +65,17 @@
       accent-color: #004d40;
     }
   }
+
+  .error {
+    color: #c00;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .checkbox-group.ng-invalid.ng-touched {
+    border: 1px solid #c00;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+
 }
